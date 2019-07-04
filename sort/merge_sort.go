@@ -5,20 +5,13 @@ import (
 )
 
 func MergeSort(arr []int) []int {
-	if len(arr) <= 1 {
-		return arr
-	}
-	return mergeSort(arr)
-}
-
-func mergeSort(arr []int) []int {
 	length := len(arr)
 
 	if length <= 1 {
 		return arr
 	}
 	pivot := (length) / 2
-	return merge(mergeSort(arr[:pivot]), mergeSort(arr[pivot:]))
+	return merge(MergeSort(arr[:pivot]), MergeSort(arr[pivot:]))
 }
 
 func merge(left, right []int) []int {
