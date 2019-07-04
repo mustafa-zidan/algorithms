@@ -5,12 +5,10 @@ import (
 )
 
 func MergeSort(arr []int) []int {
-	length := len(arr)
-
-	if length <= 1 {
+	if len(arr) <= 1 {
 		return arr
 	}
-	pivot := (length) / 2
+	pivot := (len(arr)) / 2
 	return merge(MergeSort(arr[:pivot]), MergeSort(arr[pivot:]))
 }
 
