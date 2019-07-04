@@ -1,15 +1,56 @@
 package main
 
+import(
+	"fmt"
+	"sync"
+)
+
 type LinkedList struct {
-	length   int
-	Previous LinkedList
+	Previous *LinkedList
 	Val      interface{}
-	Next     LinkedList
+	Next     *LinkedList
 }
 
-func Add(item interface{}) {
+func (l *LinkedList) Add(item interface{}) {
+	next:= l.Next;
+	if  next != nil {
+		for next.Next != nil {
+			next = next.Next
+		}
+	}
+	next = LinkedList{l, item}
+	l.Next = next
 }
 
-func Remove(i index) {}
+func (l *LinkedList) Remove(i index) {
+	node = l.Get(i)
+	if node.Next != nil && node.Previous != nil {
+		node.Previous.Next = node.Next
+		node.Next.Previous = node.Previous
+	} else if node.Next != nil && node.Previous == nil {
+		node.Next.Previous = nil
+	} else if node.Previous != nil && node.Next == nil {
+		node.Previous.Next = nil
+	}
 
-func Get(i index) interface{} { return nil }
+}
+
+func (l *LinkedList) Get(i index) interface{} {
+	count = 1
+	item = l.Next
+	for count <= index {
+		item = item.Next
+		count++
+	}
+	return next
+}
+
+func (l *LinkedList) Len() int{
+	count := 1
+	next:= l.Next;
+	for next != nil {
+		next = next.Next
+		count++
+	}
+	return count
+}
