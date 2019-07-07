@@ -1,12 +1,7 @@
-package main
-
-import (
-	"fmt"
-)
+package datastructures
 
 type BinarySearchTree struct {
 	Root *TreeNode
-
 }
 
 type TreeNode struct {
@@ -19,7 +14,6 @@ type TreeNode struct {
 func (t *BinarySearchTree) InOrderTreeWalk() []interface{} {
 	return t.Root.InOrderTreeWalk()
 }
-
 
 func (t *BinarySearchTree) PreOrderTreeWalk() []interface{} {
 	return t.Root.PreOrderTreeWalk()
@@ -116,7 +110,7 @@ func (n *TreeNode) Insert(item interface{}) {
 }
 
 func (t *BinarySearchTree) Search(item interface{}) *TreeNode {
-	return t.Root.search(item)
+	return t.Root.Search(item)
 }
 
 func (n *TreeNode) Search(item interface{}) *TreeNode {
@@ -141,10 +135,7 @@ func (t *BinarySearchTree) Replace(src, dest *TreeNode) {
 	dest.Parent = src.Parent
 }
 
-
-}
 func (t *BinarySearchTree) Delete(node *TreeNode) {
-
 	if node.Left == nil {
 		t.Replace(node, node.Right)
 	} else if node.Right == nil {
@@ -160,10 +151,37 @@ func (t *BinarySearchTree) Delete(node *TreeNode) {
 	}
 }
 
+func (t *BinarySearchTree) Size() int{
+	root := t.Root
+	return root.Size()
+}
+
+func (n *TreeNode) Size() int{
+	if n.Left == nil && n.Right == nil {
+		return 1
+	} else if n.Left == nil {
+		return 1 +  n.Right.Size()
+	} else if n.Right == nil {
+		return 1 + n.Left.Size()
+	}
+	return 1 + n.Left.Size() + n.Right.Size()
+}
 
 
-//Traverse
-//BFS
-//DFS
-//Greedy
-//A*
+// A tree is Continuous tree if in each root to leaf path,
+// absolute difference between keys of two adjacent is 1.
+// We are given a binary tree, we need to check if tree is continuous or not.
+func (n *TreeNode)  IsContinous() bool {
+	return false
+}
+
+// A tree can be folded if left and right subtrees of the tree are structure
+// wise mirror image of each other. An empty tree is considered as foldable.
+func (n *TreeNode)  IsFoldable() bool {
+	return false
+}
+
+
+func (t *BinarySearchTree) Join(other *BinarySearchTree) *BinarySearchTree{
+
+}

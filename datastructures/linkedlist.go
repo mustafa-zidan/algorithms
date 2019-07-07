@@ -1,9 +1,4 @@
-package main
-
-import(
-	"fmt"
-	"sync"
-)
+package datastructures
 
 type LinkedList struct {
 	Previous *LinkedList

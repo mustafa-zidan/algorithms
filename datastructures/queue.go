@@ -1,4 +1,4 @@
-package main
+package datastructures
 
 import (
 	"fmt"
@@ -10,8 +10,8 @@ type Queue struct {
 	lock  sync.RWMutex
 }
 
-//New returns new instance pointer of Queue struct
-func New() *Queue {
+//NewQueue returns new instance pointer of Queue struct
+func NewQueue() *Queue {
 	q := Queue{}
 	q.items = make([]interface{}, 0)
 	return &q
@@ -35,14 +35,4 @@ func (q *Queue) Pop() interface{} {
 	}
 	q.lock.Unlock()
 	return item
-}
-
-func main() {
-	queue := New()
-	queue.Push(2)
-	queue.Push(3)
-	queue.Push(4)
-	fmt.Println(queue.Pop())
-	fmt.Println(queue.Pop())
-	fmt.Println(queue.Pop())
 }

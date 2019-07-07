@@ -1,4 +1,4 @@
-package main
+package datastructures
 
 type Node struct {
 	Val      interface{}

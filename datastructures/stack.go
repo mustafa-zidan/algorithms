@@ -1,4 +1,4 @@
-package main
+package datastructures
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type Stack struct {
 }
 
 //New returns new instance pointer of Stack struct
-func New() *Stack {
+func NewStack() *Stack {
 	s := &Stack{}
 	s.items = make([]interface{}, 0)
 	return s
@@ -38,12 +38,3 @@ func (s *Stack) Len() int {
 	return len(s.items)
 }
 
-func main() {
-	stack := New()
-	stack.Push(2)
-	stack.Push(3)
-	stack.Push(4)
-	fmt.Println(stack.Pop())
-	fmt.Println(stack.Pop())
-	fmt.Println(stack.Pop())
-}
