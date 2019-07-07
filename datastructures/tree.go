@@ -3,7 +3,16 @@ package datastructures
 type Node struct {
 	Val      interface{}
 	Parent   *Node
-	Children []Node
+	Children []*Node
+}
+
+
+func (node *Node) Insert(item interface{}) {
+	child := &Node{item, node}
+	if node.Children == nil {
+		node.Children = make([]*Node, 0)
+	}
+	node.Children = append(node.Children, child)
 }
 
 func (node *Node) Delete() {
