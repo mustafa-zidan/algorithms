@@ -1,7 +1,6 @@
 package datastructures
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -37,4 +36,3 @@ func (s *Stack) Pop() interface{} {
 func (s *Stack) Len() int {
 	return len(s.items)
 }
-

@@ -5,10 +5,10 @@ type BinarySearchTree struct {
 }
 
 type TreeNode struct {
-	Val   interface{}
+	Val    interface{}
 	Parent *TreeNode
-	Left  *TreeNode
-	Right *TreeNode
+	Left   *TreeNode
+	Right  *TreeNode
 }
 
 func (t *BinarySearchTree) InOrderTreeWalk() []interface{} {
@@ -25,43 +25,42 @@ func (t *BinarySearchTree) PostOrderTreeWalk() []interface{} {
 
 func (n *TreeNode) InOrderTreeWalk() []interface{} {
 	result := make([]interface{}, 0)
-	n.Left != nil {
-		result = append(result, n.Left.InorderTreeWalk()...)
+	if n.Left != nil {
+		result = append(result, n.Left.InOrderTreeWalk()...)
 	}
 	result = append(result, n.Val)
-	n.Left != nil {
-		result = append(result, n.Right.InorderTreeWalk()...)
+	if n.Right != nil {
+		result = append(result, n.Right.InOrderTreeWalk()...)
 	}
 	return result
 }
 
-func (t *BinarySearchTree) PreOrderTreeWalk() []interface{} {
+func (n *TreeNode) PreOrderTreeWalk() []interface{} {
 	result := make([]interface{}, 0)
-	result = append(result, t.Val)
-	t.Left != nil {
-		result = append(result, t.Left.InorderTreeWalk()...)
+	result = append(result, n.Val)
+	if n.Left != nil {
+		result = append(result, n.Left.PreOrderTreeWalk()...)
 	}
-	t.Left != nil {
-		result = append(result, t.Right.InorderTreeWalk()...)
+	if n.Right != nil {
+		result = append(result, n.Right.PreOrderTreeWalk()...)
 	}
 	return result
 }
 
-
-func (t *BinarySearchTree) PostOrderTreeWalk() []interface{} {
+func (n *TreeNode) PostOrderTreeWalk() []interface{} {
 	result := make([]interface{}, 0)
-	t.Left != nil {
-		result = append(result, t.Left.InorderTreeWalk()...)
+	if n.Left != nil {
+		result = append(result, n.Left.PostOrderTreeWalk()...)
 	}
 
-	t.Left != nil {
-		result = append(result, t.Right.InorderTreeWalk()...)
+	if n.Right != nil {
+		result = append(result, n.Right.PostOrderTreeWalk()...)
 	}
-	result = append(result, t.Val)
+	result = append(result, n.Val)
 	return result
 }
 
-func (t * BinarySearchTree) Minimum() *TreeNode {
+func (t *BinarySearchTree) Minimum() *TreeNode {
 	min := t.Root
 	for min.Left != nil {
 		min = min.Left
@@ -69,7 +68,7 @@ func (t * BinarySearchTree) Minimum() *TreeNode {
 	return min
 }
 
-func (n * TreeNode) Minimum() *TreeNode {
+func (n *TreeNode) Minimum() *TreeNode {
 	min := n
 	for min.Left != nil {
 		min = min.Left
@@ -77,7 +76,7 @@ func (n * TreeNode) Minimum() *TreeNode {
 	return min
 }
 
-func (n *TreeNode) Sucessor() *TreeNode{
+func (n *TreeNode) Sucessor() *TreeNode {
 	if n.Right != nil {
 		return n.Minimum()
 	}
@@ -95,16 +94,16 @@ func (t *BinarySearchTree) Insert(item interface{}) {
 
 func (n *TreeNode) Insert(item interface{}) {
 	if item > n.Val {
-		n.Right != nil {
+		if n.Right != nil {
 			n.Right.Insert(item)
 		} else {
-			n.Right = &TreeNode{item, n}
+			n.Right = &TreeNode{item, n, nil, nil}
 		}
 	} else {
-		n.Left != nil {
+		if n.Left != nil {
 			n.Left.Insert(item)
 		} else {
-			n.Left = &TreeNode{item, n}}
+			n.Left = &TreeNode{item, n, nil, nil}
 		}
 	}
 }
@@ -118,7 +117,7 @@ func (n *TreeNode) Search(item interface{}) *TreeNode {
 		return n
 	} else if item > n.Val && n.Right != nil {
 		return n.Right.Search(item)
-	} else if n.Left != nil{
+	} else if n.Left != nil {
 		return n.Left.Search(item)
 	}
 	return nil
@@ -147,20 +146,20 @@ func (t *BinarySearchTree) Delete(node *TreeNode) {
 		}
 		t.Replace(node, successor)
 		successor.Left = node.Left
-		successor.Left.Parent == successor
+		successor.Left.Parent = successor
 	}
 }
 
-func (t *BinarySearchTree) Size() int{
+func (t *BinarySearchTree) Size() int {
 	root := t.Root
 	return root.Size()
 }
 
-func (n *TreeNode) Size() int{
+func (n *TreeNode) Size() int {
 	if n.Left == nil && n.Right == nil {
 		return 1
 	} else if n.Left == nil {
-		return 1 +  n.Right.Size()
+		return 1 + n.Right.Size()
 	} else if n.Right == nil {
 		return 1 + n.Left.Size()
 	}
@@ -170,21 +169,21 @@ func (n *TreeNode) Size() int{
 // A tree is Continuous tree if in each root to leaf path,
 // absolute difference between keys of two adjacent is 1.
 // We are given a binary tree, we need to check if tree is continuous or not.
-func (n *TreeNode)  IsContinous() bool {
+func (n *TreeNode) IsContinous() bool {
 	return false
 }
 
 // A tree can be folded if left and right subtrees of the tree are structure
 // wise mirror image of each other. An empty tree is considered as foldable.
-func (n *TreeNode)  IsFoldable() bool {
+func (n *TreeNode) IsFoldable() bool {
 	return false
 }
 
-func (t *BinarySearchTree) Join(other *BinarySearchTree) *BinarySearchTree{
-
+func (t *BinarySearchTree) Join(other *BinarySearchTree) *BinarySearchTree {
+	return nil
 }
 
 // invert
-func (t *BinarySearchTree)  Invert() *BinarySearchTree {
+func (t *BinarySearchTree) Invert() *BinarySearchTree {
 	return nil
 }

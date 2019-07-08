@@ -6,9 +6,8 @@ type Node struct {
 	Children []*Node
 }
 
-
 func (node *Node) Insert(item interface{}) {
-	child := &Node{item, node}
+	child := &Node{item, node, nil}
 	if node.Children == nil {
 		node.Children = make([]*Node, 0)
 	}
@@ -17,7 +16,7 @@ func (node *Node) Insert(item interface{}) {
 
 func (node *Node) Delete() {
 	// Remove the node from it's parents children collection
-	for idx, sibling := range n.Parent.Children {
+	for idx, sibling := range node.Parent.Children {
 		if sibling == node {
 			node.Parent.Children = append(
 				node.Parent.Children[:idx],

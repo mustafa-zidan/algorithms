@@ -1,7 +1,6 @@
 package datastructures
 
 import (
-	"fmt"
 	"sync"
 )
 
