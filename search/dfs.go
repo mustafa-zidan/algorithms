@@ -78,3 +78,18 @@ func GraphDFTraverse(g *ds.Graph, f func(*ds.Vertex)) {
 		f(i)
 	}
 }
+
+func GraphDFTraverseRec(g *ds.Graph, v *ds.Vertex, discovered map[*ds.Vertex]bool, f func(*ds.Vertex)) {
+	if discovered == nil {
+		discovered = make(map[*ds.Vertex]bool)
+	}
+	if _, ok := discovered[v]; ok {
+		return
+	}
+	if edges, ok := g.Edges[*v]; ok {
+		for _, adjecent := range edges {
+			GraphDFTraverseRec(g, adjecent, discovered, f)
+		}
+	}
+	f(v)
+}

@@ -45,12 +45,16 @@ func main() {
 	fillGraph(g)
 	g.String()
 	search.GraphBFTraverse(g, func(v *ds.Vertex) {
-		fmt.Printf("%v ", v)
+		fmt.Printf("%v\n", v)
 	})
 
 	search.GraphDFTraverse(g, func(v *ds.Vertex) {
 		fmt.Printf("%v\n", v)
 	})
+	// WARNING STACKOVERFLOW
+	// search.GraphDFTraverseRec(g, g.Vertices[0], nil, func(v *ds.Vertex) {
+	// 	fmt.Printf("%v\n", v)
+	// })
 }
 
 func fillGraph(g *ds.Graph) {
