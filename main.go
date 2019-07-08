@@ -32,7 +32,14 @@ func main() {
 		root = ds.Insert(root, key)
 	}
 
-	inOrder(root, func(node *AVLNode) {
-		fmt.Println(node.Key, node.Height)
+	tree := &ds.BinarySearchTree{}
+	for _, key := range keys {
+		tree.Insert(key)
+	}
+
+	fmt.Println(tree.InOrderTreeWalk())
+
+	ds.InOrder(root, func(node *ds.AVLNode) {
+		fmt.Println(node.Val, node.Height)
 	})
 }

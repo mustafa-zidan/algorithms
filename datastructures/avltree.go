@@ -1,7 +1,7 @@
 package datastructures
 
 type AVLNode struct {
-	Val         interface{}
+	Val         int
 	Height      int
 	Left, Right *AVLNode
 }
@@ -52,7 +52,7 @@ func AVLMax(a, b int) int {
 	return b
 }
 
-func Insert(n *AVLNode, key interface{}) *AVLNode {
+func Insert(n *AVLNode, key int) *AVLNode {
 	if n == nil {
 		n = &AVLNode{key, 0, nil, nil}
 		n.Height = AVLMax(height(n.Left), height(n.Right)) + 1

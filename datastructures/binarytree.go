@@ -5,26 +5,26 @@ type BinarySearchTree struct {
 }
 
 type TreeNode struct {
-	Val    interface{}
+	Val    int
 	Parent *TreeNode
 	Left   *TreeNode
 	Right  *TreeNode
 }
 
-func (t *BinarySearchTree) InOrderTreeWalk() []interface{} {
+func (t *BinarySearchTree) InOrderTreeWalk() []int {
 	return t.Root.InOrderTreeWalk()
 }
 
-func (t *BinarySearchTree) PreOrderTreeWalk() []interface{} {
+func (t *BinarySearchTree) PreOrderTreeWalk() []int {
 	return t.Root.PreOrderTreeWalk()
 }
 
-func (t *BinarySearchTree) PostOrderTreeWalk() []interface{} {
+func (t *BinarySearchTree) PostOrderTreeWalk() []int {
 	return t.Root.PostOrderTreeWalk()
 }
 
-func (n *TreeNode) InOrderTreeWalk() []interface{} {
-	result := make([]interface{}, 0)
+func (n *TreeNode) InOrderTreeWalk() []int {
+	result := make([]int, 0)
 	if n.Left != nil {
 		result = append(result, n.Left.InOrderTreeWalk()...)
 	}
@@ -35,8 +35,8 @@ func (n *TreeNode) InOrderTreeWalk() []interface{} {
 	return result
 }
 
-func (n *TreeNode) PreOrderTreeWalk() []interface{} {
-	result := make([]interface{}, 0)
+func (n *TreeNode) PreOrderTreeWalk() []int {
+	result := make([]int, 0)
 	result = append(result, n.Val)
 	if n.Left != nil {
 		result = append(result, n.Left.PreOrderTreeWalk()...)
@@ -47,8 +47,8 @@ func (n *TreeNode) PreOrderTreeWalk() []interface{} {
 	return result
 }
 
-func (n *TreeNode) PostOrderTreeWalk() []interface{} {
-	result := make([]interface{}, 0)
+func (n *TreeNode) PostOrderTreeWalk() []int {
+	result := make([]int, 0)
 	if n.Left != nil {
 		result = append(result, n.Left.PostOrderTreeWalk()...)
 	}
@@ -88,11 +88,15 @@ func (n *TreeNode) Sucessor() *TreeNode {
 	return sucessor
 }
 
-func (t *BinarySearchTree) Insert(item interface{}) {
-	t.Root.Insert(item)
+func (t *BinarySearchTree) Insert(item int) {
+	if t.Root == nil {
+		t.Root = &TreeNode{item, nil, nil, nil}
+	} else {
+		t.Root.Insert(item)
+	}
 }
 
-func (n *TreeNode) Insert(item interface{}) {
+func (n *TreeNode) Insert(item int) {
 	if item > n.Val {
 		if n.Right != nil {
 			n.Right.Insert(item)
@@ -108,11 +112,11 @@ func (n *TreeNode) Insert(item interface{}) {
 	}
 }
 
-func (t *BinarySearchTree) Search(item interface{}) *TreeNode {
+func (t *BinarySearchTree) Search(item int) *TreeNode {
 	return t.Root.Search(item)
 }
 
-func (n *TreeNode) Search(item interface{}) *TreeNode {
+func (n *TreeNode) Search(item int) *TreeNode {
 	if item == n.Val {
 		return n
 	} else if item > n.Val && n.Right != nil {
