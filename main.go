@@ -20,9 +20,9 @@ func main() {
 	stack.Push(2)
 	stack.Push(3)
 	stack.Push(4)
-	fmt.Println(stack.Pop())
-	fmt.Println(stack.Pop())
-	fmt.Println(stack.Pop())
+	for stack.IsEmpty() {
+		fmt.Println(stack.Pop())
+	}
 
 	var root *ds.AVLNode
 	keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10}
