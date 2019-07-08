@@ -27,6 +27,9 @@ func (s *Stack) Push(item interface{}) {
 // Pop removes an Item from the top of the stack
 func (s *Stack) Pop() interface{} {
 	s.lock.Lock()
+	if len(s.items) == 0 {
+		return nil
+	}
 	item := s.items[len(s.items)-1]
 	s.items = s.items[:len(s.items)-1]
 	s.lock.Unlock()
@@ -35,4 +38,8 @@ func (s *Stack) Pop() interface{} {
 
 func (s *Stack) Len() int {
 	return len(s.items)
+}
+
+func (s *Stack) IsEmpty() bool {
+	return len(s.items) == 0
 }

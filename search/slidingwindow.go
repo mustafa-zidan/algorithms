@@ -1,11 +1,11 @@
 package search
 
-func BuyLots(lots []int, target int) []int{
+func BuyLots(lots []int, target int) []int {
 	i, j, sum := 0, 1, 0
 	// TODO check if length = 1 and
 	for j < len(lots) {
 		if sum += lots[j]; sum == target {
-			return lots[]
+			return lots[i:j]
 		} else if sum > target {
 			sum -= lots[i]
 			i++
@@ -13,7 +13,6 @@ func BuyLots(lots []int, target int) []int{
 			j++
 		}
 	}
-
 	return nil
 
 }

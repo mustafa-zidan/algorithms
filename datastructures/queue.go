@@ -26,6 +26,9 @@ func (q *Queue) Push(item interface{}) {
 // Pop removes first item added to the queue
 func (q *Queue) Pop() interface{} {
 	q.lock.Lock()
+	if len(q.items) == 0 {
+		return nil
+	}
 	item := q.items[0]
 	if len(q.items) > 1 {
 		q.items = q.items[1:]
@@ -34,4 +37,8 @@ func (q *Queue) Pop() interface{} {
 	}
 	q.lock.Unlock()
 	return item
+}
+
+func (q *Queue) IsEmpty() bool {
+	return len(q.items) == 0
 }

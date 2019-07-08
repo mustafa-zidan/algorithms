@@ -1,39 +1,61 @@
 package search
 
-import(
+import (
 	ds "github.com/mustafa-zidan/algorithms/datastructures"
 )
 
-func (node *ds.TreeNode) BFS(item interface{}) *ds.TreeNode{
-
+func BFS(node *ds.TreeNode, item int) *ds.TreeNode {
 	queue := ds.NewQueue()
-	queue.Push(n)
-	for i := queue.Pop() ; i!= nil {
+	queue.Push(node)
+	for !queue.IsEmpty() {
+		i := queue.Pop().(*ds.TreeNode)
 		if i.Val == item {
 			return i
 		}
 
-		i.Left != nil {
+		if i.Left != nil {
 			queue.Push(i.Left)
 		}
 
-		i.Right != nil {
+		if i.Right != nil {
 			queue.Push(i.Right)
 		}
 	}
 	return nil
 }
 
-func (node *ds.Node) BFS(item interface{}) *ds.Node{
+func TreeBFS(node *ds.Node, item int) *ds.Node {
 	queue := ds.NewQueue()
-	queue.Push(n)
-	for i := queue.Pop() ; i!= nil {
+	queue.Push(node)
+	for !queue.IsEmpty() {
+		i := queue.Pop().(*ds.Node)
 		if i.Val == item {
 			return i
 		}
-		i.Children != nil {
-			queue.Push(i.Children...)
+		if i.Children != nil {
+			for _, child := range i.Children {
+				queue.Push(child)
+			}
 		}
 	}
 	return nil
+}
+
+func GraphBFTraverse(g *ds.Graph, f func(*ds.Vertex)) {
+	queue := ds.NewQueue()
+	queue.Push(g.Vertices[0])
+	visited := make(map[*ds.Vertex]bool)
+	for !queue.IsEmpty() {
+		i := queue.Pop().(*ds.Vertex)
+		visited[i] = true
+		if edges, ok := g.Edges[*i]; ok {
+			for _, v := range edges {
+				if _, ok = visited[v]; !ok {
+					queue.Push(v)
+					visited[v] = true
+				}
+			}
+		}
+		f(i)
+	}
 }
