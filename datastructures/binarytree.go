@@ -174,7 +174,17 @@ func (n *TreeNode) Size() int {
 // absolute difference between keys of two adjacent is 1.
 // We are given a binary tree, we need to check if tree is continuous or not.
 func (n *TreeNode) IsContinous() bool {
-	return false
+	if n == nil {
+		return true
+	}
+	valid := true
+	if n.Left != nil {
+		valid = valid && (n.Val-n.Left.Val) == 1
+	}
+	if n.Right != nil {
+		valid = valid && (n.Right.Val-n.Val) == 1
+	}
+	return valid && n.Left.IsContinous() && n.Right.IsContinous()
 }
 
 // A tree can be folded if left and right subtrees of the tree are structure

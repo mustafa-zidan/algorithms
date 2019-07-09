@@ -85,12 +85,34 @@ func Insert(n *AVLNode, key int) *AVLNode {
 
 type action func(node *AVLNode)
 
-func InOrder(root *AVLNode, action action) {
+func AVLInOrder(root *AVLNode, action action) {
 	if root == nil {
 		return
 	}
 
-	InOrder(root.Left, action)
+	AVLInOrder(root.Left, action)
 	action(root)
-	InOrder(root.Right, action)
+	AVLInOrder(root.Right, action)
+}
+
+
+func AVLPostOrder(root *AVLNode, action action) {
+	if root == nil {
+		return
+	}
+
+	AVLPostOrder(root.Left, action)
+	AVLPostOrder(root.Right, action)
+	action(root)
+
+}
+
+
+func AVLPreOrder(root *AVLNode, action action) {
+	if root == nil {
+		return
+	}
+	action(root)
+	AVLPreOrder(root.Left, action)
+	AVLPreOrder(root.Right, action)
 }

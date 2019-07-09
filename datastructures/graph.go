@@ -21,6 +21,69 @@ type Graph struct {
 	Lock     sync.RWMutex
 }
 
+type WeightedGraph struct {
+	Vertices 	[]*Vertex
+	Edges		[]*Edge
+	Lock 		sync.RWMutex
+}
+
+type Edge struct{
+	V1,V2 *Vertex
+	Weight int
+}
+
+func (w *WeightedGraph) AddVertex(v * Vertex) {
+	if w.Vertices == nil {
+		w.Vertices = make([]*Vertex, 0)
+	}
+	w.Vertices = append(w.Vertices, v)
+}
+
+func (w *WeightedGraph) AddEdge(v1, v2 *Vertex, weight int) {
+	if w.Edges == nil {
+		w.Edges = make([]*Edge, 0)
+	}
+	// search if edge already exists then just modify weight
+	for _, e := range w.Edges {
+		if e.V1 == v1 && e.V2 == v2 {
+			e.Weight = weight
+			return
+		}
+	}
+	w.Edges = append(w.Edges, &Edge{v1,v2, weight})
+}
+
+func (w *WeightedGraph) GetEdges(v *Vertex) []*Edge{
+	edges := make([]*Edge, 0)
+	for _, e := range w.Edges {
+		if e.V1 == v {
+			edges = append(edges, e)
+		}
+	}
+	return edges
+}
+
+
+
+func (w *WeightedGraph) Dijkstra(src, dest *Vertex) *Edge {
+	path := make(map[*Vertex]int)
+	visited := make(map[*Vertex]bool)
+	for _, v := range w.Vertices {
+		weight := path[v]
+		for _,e := range w.GetEdges(v) {
+			if _, ok := visited[e.V2]; ok {
+				continue
+			}
+			edgePath := weight + e.Weight
+			if  path[e.V2] == 0 || edgePath < path[e.V2] {
+				path[e.V2] = edgePath
+			}
+		}
+	}
+	return &Edge{src, dest, path[dest]}
+}
+
+
 // AddVertex adds a node to the graph
 func (g *Graph) AddVertex(n *Vertex) {
 	g.Lock.Lock()
