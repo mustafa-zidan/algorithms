@@ -60,21 +60,18 @@ func TreeDFS(node *ds.Node, item int) *ds.Node {
 	return nil
 }
 
-func GraphDFTraverse(g *ds.Graph, f func(*ds.Vertex)) {
+func GraphDFTraverse(g *ds.Graph,start string, f func(*ds.Vertex)) {
 	stack := ds.NewStack()
-	stack.Push(g.Vertices[0])
+	stack.Push(g.Vertices[start])
 	visited := make(map[*ds.Vertex]bool)
 	for !stack.IsEmpty() {
 		i := stack.Pop().(*ds.Vertex)
-		visited[i] = true
-		if edges, ok := g.Edges[*i]; ok {
-			for _, v := range edges {
-				if _, ok = visited[v]; !ok {
-					stack.Push(v)
-					visited[v] = true
-				}
+		for _, v := range i.Edges {
+			if _, ok := visited[v]; !ok {
+				stack.Push(v)
 			}
 		}
+		visited[i] = true
 		f(i)
 	}
 }
@@ -86,10 +83,11 @@ func GraphDFTraverseRec(g *ds.Graph, v *ds.Vertex, discovered map[*ds.Vertex]boo
 	if _, ok := discovered[v]; ok {
 		return
 	}
-	if edges, ok := g.Edges[*v]; ok {
-		for _, adjecent := range edges {
-			GraphDFTraverseRec(g, adjecent, discovered, f)
-		}
+	discovered[v] = true
+	for _, adjecent := range v.Edges {
+		GraphDFTraverseRec(g, adjecent, discovered, f)
 	}
+
 	f(v)
+
 }

@@ -5,120 +5,144 @@ import (
 	"sync"
 )
 
-// Vertex a single Vertex that composes the tree
-type Vertex struct {
-	Value string
+type WeightedVertex struct {
+	Val string
+	Edges map[string]*WeightedEdge
 }
 
-func (n *Vertex) String() string {
-	return fmt.Sprintf("%v", n.Value)
-}
-
-// Graph the Items graph
-type Graph struct {
-	Vertices []*Vertex
-	Edges    map[Vertex][]*Vertex
-	Lock     sync.RWMutex
-}
-
-type WeightedGraph struct {
-	Vertices 	[]*Vertex
-	Edges		[]*Edge
-	Lock 		sync.RWMutex
-}
-
-type Edge struct{
-	V1,V2 *Vertex
+type WeightedEdge struct {
+	Vertex *WeightedVertex
 	Weight int
 }
 
-func (w *WeightedGraph) AddVertex(v * Vertex) {
-	if w.Vertices == nil {
-		w.Vertices = make([]*Vertex, 0)
-	}
-	w.Vertices = append(w.Vertices, v)
-}
-
-func (w *WeightedGraph) AddEdge(v1, v2 *Vertex, weight int) {
-	if w.Edges == nil {
-		w.Edges = make([]*Edge, 0)
-	}
-	// search if edge already exists then just modify weight
-	for _, e := range w.Edges {
-		if e.V1 == v1 && e.V2 == v2 {
-			e.Weight = weight
-			return
-		}
-	}
-	w.Edges = append(w.Edges, &Edge{v1,v2, weight})
-}
-
-func (w *WeightedGraph) GetEdges(v *Vertex) []*Edge{
-	edges := make([]*Edge, 0)
-	for _, e := range w.Edges {
-		if e.V1 == v {
-			edges = append(edges, e)
-		}
-	}
-	return edges
+type WeightedGraph struct {
+	Vertices map[string]*WeightedVertex
+	lock sync.RWMutex
 }
 
 
+type Vertex struct {
+	Val string
+	Edges map[string]*Vertex
+}
 
-func (w *WeightedGraph) Dijkstra(src, dest *Vertex) *Edge {
-	path := make(map[*Vertex]int)
-	visited := make(map[*Vertex]bool)
-	for _, v := range w.Vertices {
-		weight := path[v]
-		for _,e := range w.GetEdges(v) {
-			if _, ok := visited[e.V2]; ok {
-				continue
-			}
-			edgePath := weight + e.Weight
-			if  path[e.V2] == 0 || edgePath < path[e.V2] {
-				path[e.V2] = edgePath
-			}
-		}
-	}
-	return &Edge{src, dest, path[dest]}
+type Graph struct {
+	Vertices map[string]*Vertex
+	lock sync.RWMutex
 }
 
 
-// AddVertex adds a node to the graph
-func (g *Graph) AddVertex(n *Vertex) {
-	g.Lock.Lock()
-	g.Vertices = append(g.Vertices, n)
-	g.Lock.Unlock()
+type Path struct {
+	ID string
+	Vertices []*WeightedVertex
+	Weight int
 }
 
-// AddEdge adds an edge to the graph
-func (g *Graph) AddEdge(n1, n2 *Vertex) {
-	g.Lock.Lock()
-	if g.Edges == nil {
-		g.Edges = make(map[Vertex][]*Vertex)
+type Paths  []*Path
+
+func (p Paths) Less(i,j int) bool { return p[i].Weight < p[j].Weight}
+func (p Paths) Swap(i,j int)  { p[i],p[j] = p[j],p[i]}
+func (p Paths) Len() int { return len(p)}
+
+func (g *WeightedGraph) AddVertex(value string ) *WeightedVertex{
+	if g.Vertices == nil {
+		g.Vertices = make(map[string]*WeightedVertex, 0)
 	}
-	g.Edges[*n1] = append(g.Edges[*n1], n2)
-	g.Edges[*n2] = append(g.Edges[*n2], n1)
-	g.Lock.Unlock()
+	g.Vertices[value] = &WeightedVertex{value, make(map[string]*WeightedEdge)}
+	return g.Vertices[value]
+}
+
+func (g *WeightedGraph) AddEdge(a,b string,weight int,  bidirictional bool) {
+	g.lock.Lock()
+	if _,ok := g.Vertices[a]; !ok {
+		g.AddVertex(a)
+	}
+
+	if _,ok := g.Vertices[b]; !ok {
+		g.AddVertex(b)
+	}
+
+	A := g.Vertices[a]
+	B := g.Vertices[b]
+	if _, ok := A.Edges[b]; ok {
+		A.Edges[b] = &WeightedEdge{B, weight}
+	}
+
+	if _, ok := B.Edges[a]; ok && bidirictional{
+		B.Edges[a] = &WeightedEdge{A, weight}
+	}
+
+	g.lock.Unlock()
+}
+
+func (n *WeightedVertex) String() string {
+	return fmt.Sprintf("%v", n.Val)
 }
 
 // String Prints String Presentation of the Graph
-func (g *Graph) String() {
-	g.Lock.RLock()
+func (g *WeightedGraph) String() {
+	g.lock.RLock()
 	s := ""
-	for i := 0; i < len(g.Vertices); i++ {
-		s += g.Vertices[i].String() + " -> "
-		near := g.Edges[*g.Vertices[i]]
-		for j := 0; j < len(near); j++ {
-			s += near[j].String() + " "
+	for _, v := range g.Vertices{
+		s += v.String() + " -> "
+		for _, e := range v.Edges{
+			s += e.Vertex.String() + " "
 		}
 		s += "\n"
 	}
 	fmt.Println(s)
-	g.Lock.RUnlock()
+	g.lock.RUnlock()
+}
+// String Prints String Presentation of the Graph
+func (g *Graph) String() {
+	g.lock.RLock()
+	s := ""
+	for _, v := range g.Vertices{
+		s += v.String() + " -> "
+		for _, e := range v.Edges{
+			s += e.String() + " "
+		}
+		s += "\n"
+	}
+	fmt.Println(s)
+	g.lock.RUnlock()
 }
 
-// BFS
-// DFS
-// A*
-// Dijkstra
+func (n *Vertex) String() string {
+	return fmt.Sprintf("%v", n.Val)
+}
+
+func (g *Graph) AddVertex(value string ) *Vertex{
+	g.lock.Lock()
+	if g.Vertices == nil {
+		g.Vertices = make(map[string]*Vertex, 0)
+	}
+	g.Vertices[value] = &Vertex{value, make(map[string]*Vertex, 0)}
+	g.lock.Unlock()
+	return g.Vertices[value]
+}
+
+func (g *Graph) AddEdge(a,b string, bidirictional bool) {
+	g.lock.Lock()
+	if _,ok := g.Vertices[a]; !ok {
+		g.AddVertex(a)
+	}
+
+	if _,ok := g.Vertices[b]; !ok {
+		g.AddVertex(b)
+	}
+
+	A := g.Vertices[a]
+	B := g.Vertices[b]
+	if _, ok := A.Edges[b]; ok {
+		A.Edges[b] = B
+	}
+
+	if _, ok := B.Edges[a]; ok && bidirictional{
+		B.Edges[a] = A
+	}
+
+	g.lock.Unlock()
+}
+
+

@@ -46,34 +46,19 @@ func binarySearchTree() {
 
 func graph() {
 	g := &ds.Graph{}
-
-	nA := ds.Vertex{"A"}
-	nB := ds.Vertex{"B"}
-	nC := ds.Vertex{"C"}
-	nD := ds.Vertex{"D"}
-	nE := ds.Vertex{"E"}
-	nF := ds.Vertex{"F"}
-	g.AddVertex(&nA)
-	g.AddVertex(&nB)
-	g.AddVertex(&nC)
-	g.AddVertex(&nD)
-	g.AddVertex(&nE)
-	g.AddVertex(&nF)
-
-	g.AddEdge(&nA, &nB)
-	g.AddEdge(&nA, &nC)
-	g.AddEdge(&nB, &nE)
-	g.AddEdge(&nC, &nE)
-	g.AddEdge(&nE, &nF)
-	g.AddEdge(&nD, &nA)
-
+	g.AddEdge("A", "B", true)
+	g.AddEdge("A", "C", true)
+	g.AddEdge("B", "E", true)
+	g.AddEdge("C", "E", true)
+	g.AddEdge("E", "F", true)
+	g.AddEdge("D", "A", true)
 
 	g.String()
-	search.GraphBFTraverse(g, func(v *ds.Vertex) {
+	search.GraphBFTraverse(g, "A", func(v *ds.Vertex) {
 		fmt.Printf("%v\n", v)
 	})
 
-	search.GraphDFTraverse(g, func(v *ds.Vertex) {
+	search.GraphDFTraverse(g, "A", func(v *ds.Vertex) {
 		fmt.Printf("%v\n", v)
 	})
 	// WARNING STACKOVERFLOW
@@ -106,25 +91,34 @@ func queue() {
 
 func weightedGraph() {
 	g := &ds.WeightedGraph{}
-	nA := ds.Vertex{"A"}
-	nB := ds.Vertex{"B"}
-	nC := ds.Vertex{"C"}
-	nD := ds.Vertex{"D"}
-	nE := ds.Vertex{"E"}
-	nF := ds.Vertex{"F"}
-	g.AddVertex(&nA)
-	g.AddVertex(&nB)
-	g.AddVertex(&nC)
-	g.AddVertex(&nD)
-	g.AddVertex(&nE)
-	g.AddVertex(&nF)
 
-	g.AddEdge(&nA, &nB, 1)
-	g.AddEdge(&nA, &nC, 2)
-	g.AddEdge(&nB, &nE, 3)
-	g.AddEdge(&nC, &nE, 4)
-	g.AddEdge(&nE, &nF, 5)
-	g.AddEdge(&nD, &nA, 6)
+	g.AddEdge("S", "A", 7, true)
+	g.AddEdge("S", "B", 2, true)
+	g.AddEdge("S", "C", 3, true)
 
-	fmt.Println(g.Dijkstra(&nA, &nC))
+	g.AddEdge("A", "B", 3, true)
+	g.AddEdge("A", "D", 4, true)
+
+	g.AddEdge("B", "D", 4, true)
+	g.AddEdge("B", "H", 1, true)
+
+	g.AddEdge("C", "L", 2, true)
+
+	g.AddEdge("D", "F", 5, true)
+
+	g.AddEdge("E", "G", 2, true)
+	g.AddEdge("E", "K", 5, true)
+
+	g.AddEdge("F", "H", 3, true)
+
+	g.AddEdge("G", "H", 2, true)
+
+	g.AddEdge("I", "J", 6, true)
+	g.AddEdge("I", "K", 4, true)
+	g.AddEdge("I", "L", 4, true)
+
+	g.AddEdge("J", "K", 4, true)
+	g.AddEdge("J", "L", 4, true)
+
+	fmt.Println(search.Dijkstra(g, "S", "E"))
 }

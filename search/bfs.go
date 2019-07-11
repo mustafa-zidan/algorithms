@@ -5,57 +5,53 @@ import (
 )
 
 func BFS(node *ds.TreeNode, item int) *ds.TreeNode {
-	queue := ds.NewQueue()
-	queue.Push(node)
-	for !queue.IsEmpty() {
-		i := queue.Pop().(*ds.TreeNode)
+	queue := make([]*ds.TreeNode, 0)
+	queue = append(queue, node)
+	for len(queue)  > 0 {
+		i := queue[0]
 		if i.Val == item {
 			return i
 		}
 
 		if i.Left != nil {
-			queue.Push(i.Left)
+			queue = append(queue, i.Left)
 		}
 
 		if i.Right != nil {
-			queue.Push(i.Right)
+			queue = append(queue, i.Right)
 		}
 	}
 	return nil
 }
 
 func TreeBFS(node *ds.Node, item int) *ds.Node {
-	queue := ds.NewQueue()
-	queue.Push(node)
-	for !queue.IsEmpty() {
-		i := queue.Pop().(*ds.Node)
+	queue := make([]*ds.Node, 0)
+	queue = append(queue, node)
+	for len(queue)  > 0 {
+		i := queue[0]
 		if i.Val == item {
 			return i
 		}
 		if i.Children != nil {
-			for _, child := range i.Children {
-				queue.Push(child)
-			}
+			queue = append(queue, i.Children...)
 		}
 	}
 	return nil
 }
 
-func GraphBFTraverse(g *ds.Graph, f func(*ds.Vertex)) {
-	queue := ds.NewQueue()
-	queue.Push(g.Vertices[0])
+func GraphBFTraverse(g *ds.Graph, start string, f func(*ds.Vertex)) {
+	queue := make([]*ds.Vertex, 0)
+	queue = append(queue,g.Vertices[start])
 	visited := make(map[*ds.Vertex]bool)
-	for !queue.IsEmpty() {
-		i := queue.Pop().(*ds.Vertex)
-		visited[i] = true
-		if edges, ok := g.Edges[*i]; ok {
-			for _, v := range edges {
-				if _, ok = visited[v]; !ok {
-					queue.Push(v)
-					visited[v] = true
-				}
+	for len(queue) != 0 {
+		i := queue[0]
+		for _, v := range i.Edges {
+			if _, ok := visited[v]; !ok {
+				queue= append(queue, v )
+				visited[v] = true
 			}
 		}
 		f(i)
+		visited[i] = true
 	}
 }
