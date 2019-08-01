@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	// stack()
-	// queue()
-	// binarySearchTree()
-	// avlTree()
+	stack()
+	queue()
+	binarySearchTree()
+	avlTree()
 	// graph()
 	weightedGraph()
 }
