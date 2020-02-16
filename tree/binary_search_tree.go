@@ -69,11 +69,11 @@ func (bst *BinarySearchTree) Insert(item interface{}) {
 }
 
 func (bst *BinarySearchTree) Minimum() Node {
-    return nil
+    return bst.Root.Minimum()
 }
 
 func (bst *BinarySearchTree) Maximum() Node {
-    return nil
+    return bst.Root.Maximum()
 }
 
 func (bst *BinarySearchTree) Replace(src, dest *BinarySearchNode) {
@@ -170,6 +170,20 @@ func (n *BinarySearchNode) Search(value interface{}) Node {
         return n.Left.Search(value)
     }
     return nil
+}
+
+func (n *BinarySearchNode) Minimum() Node {
+    if n.Left != nil {
+        return n.Left.Minimum()
+    }
+    return n
+}
+
+func (n *BinarySearchNode) Maximum() Node {
+    if n.Right != nil {
+        return n.Right.Maximum()
+    }
+    return n
 }
 
 func (n *BinarySearchNode) String() string {

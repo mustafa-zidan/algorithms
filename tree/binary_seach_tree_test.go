@@ -45,3 +45,23 @@ func TestBSTSearch(t *testing.T) {
     node := tree.Search(7)
     assert.Equal(t, 7, node.(*BinarySearchNode).Val)
 }
+
+func TestBSTMinimum(t *testing.T) {
+    keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10}
+    tree := &BinarySearchTree{}
+    for _, key := range keys {
+        tree.Insert(key)
+    }
+    node := tree.Minimum()
+    assert.Equal(t, 1, node.(*BinarySearchNode).Val)
+}
+
+func TestBSTMaximum(t *testing.T) {
+    keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10}
+    tree := &BinarySearchTree{}
+    for _, key := range keys {
+        tree.Insert(key)
+    }
+    node := tree.Maximum()
+    assert.Equal(t, 16, node.(*BinarySearchNode).Val)
+}
