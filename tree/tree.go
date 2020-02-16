@@ -17,6 +17,9 @@ type Tree interface {
 
 type Node interface {
     Sucessor() *Node
+    InOrderWalk() []interface{}
+    PreOrderWalk() []interface{}
+    PostOrderWalk() []interface{}
     Insert(item interface{})
     Less(than interface{}) bool
     Greater(than interface{}) bool
