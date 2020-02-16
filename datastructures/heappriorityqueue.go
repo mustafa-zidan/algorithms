@@ -5,18 +5,17 @@ import (
 )
 
 type PriorityQueueItem struct {
-    Val   interface{}
+    Val    interface{}
     Weight int
-    Index int // The index of the item in the heap.
+    Index  int // The index of the item in the heap.
 }
 
 type HeapPriorityQueue []*PriorityQueueItem
 
-
-func NewHeapPriorityQueue()  *HeapPriorityQueue{
-	pq := make(HeapPriorityQueue, 0)
-	heap.Init(&pq)
-	return &pq
+func NewHeapPriorityQueue() *HeapPriorityQueue {
+    pq := make(HeapPriorityQueue, 0)
+    heap.Init(&pq)
+    return &pq
 }
 
 func (pq HeapPriorityQueue) Len() int { return len(pq) }
@@ -56,7 +55,6 @@ func (pq HeapPriorityQueue) IsEmpty() bool {
 }
 
 func (pq HeapPriorityQueue) Next() interface{} {
-	i := heap.Pop(&pq).(*PriorityQueueItem)
+    i := heap.Pop(&pq).(*PriorityQueueItem)
     return i.Val
 }
-
