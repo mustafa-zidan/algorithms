@@ -32,7 +32,6 @@ import "fmt"
  */
 
 type BinarySearchTree struct {
-    Tree
     Root Node
 }
 
@@ -42,22 +41,6 @@ type BinarySearchNode struct {
     Parent *BinarySearchNode
     Left   *BinarySearchNode
     Right  *BinarySearchNode
-}
-
-func (bst *BinarySearchTree) InOrder() []interface{} {
-    return bst.Root.InOrderWalk()
-}
-
-func (bst *BinarySearchTree) PreOrder() []interface{} {
-    return bst.Root.PreOrderWalk()
-}
-
-func (bst *BinarySearchTree) PostOrder() []interface{} {
-    return bst.Root.PostOrderWalk()
-}
-
-func (bst *BinarySearchTree) Search(value interface{}) Node {
-    return bst.Root.Search(value)
 }
 
 func (bst *BinarySearchTree) Insert(item interface{}) {
