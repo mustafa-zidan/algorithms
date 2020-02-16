@@ -1,5 +1,7 @@
 package tree
 
+import "fmt"
+
 /**
  * Binray Tree Implementation with int nodes values
  * If you want to change the implementation
@@ -54,8 +56,8 @@ func (bst *BinarySearchTree) PostOrder() []interface{} {
     return bst.Root.PostOrderWalk()
 }
 
-func (bst *BinarySearchTree) Search(value int) *BinarySearchNode {
-    return nil
+func (bst *BinarySearchTree) Search(value interface{}) Node {
+    return bst.Root.Search(value)
 }
 
 func (bst *BinarySearchTree) Insert(item interface{}) {
@@ -66,11 +68,11 @@ func (bst *BinarySearchTree) Insert(item interface{}) {
     }
 }
 
-func (bst *BinarySearchTree) Minimum() *BinarySearchNode {
+func (bst *BinarySearchTree) Minimum() Node {
     return nil
 }
 
-func (bst *BinarySearchTree) Maximum() *BinarySearchNode {
+func (bst *BinarySearchTree) Maximum() Node {
     return nil
 }
 
@@ -86,11 +88,11 @@ func (bst *BinarySearchTree) Size() int {
     return 0
 }
 
-func (bst *BinarySearchTree) BFS(val interface{}) *BinarySearchNode {
+func (bst *BinarySearchTree) BFS(val interface{}) Node {
     return nil
 }
 
-func (bst *BinarySearchTree) DFS(val interface{}) *BinarySearchNode {
+func (bst *BinarySearchTree) DFS(val interface{}) Node {
     return nil
 }
 
@@ -102,7 +104,7 @@ func (n *BinarySearchNode) Greater(than interface{}) bool {
     return n.Val > than.(int)
 }
 
-func (n *BinarySearchNode) Sucessor() *Node {
+func (n *BinarySearchNode) Sucessor() Node {
     return nil
 }
 
@@ -156,4 +158,20 @@ func (n *BinarySearchNode) PostOrderWalk() []interface{} {
     }
     output = append(output, n.Val)
     return output
+}
+
+func (n *BinarySearchNode) Search(value interface{}) Node {
+    if n.Val == value.(int) {
+        return n
+    }
+    if n.Less(value) {
+        return n.Right.Search(value)
+    } else if n.Greater(value) {
+        return n.Left.Search(value)
+    }
+    return nil
+}
+
+func (n *BinarySearchNode) String() string {
+    return fmt.Sprintf("%d\n", n.Val)
 }
