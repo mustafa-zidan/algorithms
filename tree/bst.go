@@ -1,6 +1,9 @@
 package tree
 
-import "fmt"
+import (
+    "algorithms/util"
+    "fmt"
+)
 
 /**
  * Binray Tree Implementation with int nodes values
@@ -166,7 +169,10 @@ func (n *BinarySearchNode) Size() int {
 }
 
 func (n *BinarySearchNode) Height() int {
-    return 0
+    if n == nil {
+        return 0
+    }
+    return 1 + util.Max(n.Left.Height(), n.Right.Height())
 }
 
 func (n *BinarySearchNode) BFS(value interface{}) Node {

@@ -15,3 +15,10 @@ $ make run
 ```bash
 $ make test
 ```
+
+## Help
+To see the full list of available commands run
+
+```bash
+$ make help
+```

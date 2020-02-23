@@ -1,6 +1,7 @@
 package tree
 
 import (
+    "fmt"
     "testing"
 
     "github.com/stretchr/testify/assert"
@@ -65,6 +66,9 @@ func (suite *BSTTestSuite) TestSize() {
 }
 
 func (suite *BSTTestSuite) TestHeight() {
+    height := suite.TestTree.Root.Height()
+    fmt.Printf("%v\n", suite.TestTree.Root.String())
+    assert.Equal(suite.T(), 12, height)
 }
 
 func (suite *BSTTestSuite) TestBFS() {
@@ -86,4 +90,25 @@ func (suite *BSTTestSuite) TestIsContinous() {
 }
 
 func (suite *BSTTestSuite) TestIsFoldable() {
+}
+
+func BenchmarkBSTInsert(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10, 4}
+        tree := &BinarySearchTree{}
+        for _, key := range keys {
+            tree.Insert(key)
+        }
+    }
+}
+
+func BenchmarkBSTSearch(b *testing.B) {
+    keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10, 4}
+    tree := &BinarySearchTree{}
+    for _, key := range keys {
+        tree.Insert(key)
+    }
+    for i := 0; i < b.N; i++ {
+        tree.Root.Search(7)
+    }
 }
