@@ -11,5 +11,9 @@ type Node interface {
     Maximum() Node
     Less(than interface{}) bool
     Greater(than interface{}) bool
+    Size() int
+    Height() int
+    BFS(item interface{}) Node
+    DFS(item interface{}) Node
     String() string
 }
