@@ -16,7 +16,7 @@ type BSTTestSuite struct {
 // Make sure that TestTree is set
 // before each test
 func (suite *BSTTestSuite) SetupTest() {
-    keys := []int{2, 6, 1, 3, 5, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10, 4}
+    keys := []int{8, 4, 2, 1, 3, 6, 7, 5, 12, 10, 9, 11, 14, 13, 15}
     tree := &BinarySearchTree{}
     for _, key := range keys {
         tree.Insert(key)
@@ -31,17 +31,17 @@ func TestBST(t *testing.T) {
 }
 
 func (suite *BSTTestSuite) TestBSTInOrderWalk() {
-    expected := []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
+    expected := []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
     assert.Equal(suite.T(), expected, suite.TestTree.Root.InOrderWalk())
 }
 
 func (suite *BSTTestSuite) TestBSTPreOrderWalk() {
-    expected := []interface{}{2, 1, 6, 3, 5, 4, 7, 16, 15, 14, 13, 12, 11, 8, 9, 10}
+    expected := []interface{}{8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15}
     assert.Equal(suite.T(), expected, suite.TestTree.Root.PreOrderWalk())
 }
 
 func (suite *BSTTestSuite) TestBSTPostOrderWalk() {
-    expected := []interface{}{1, 4, 5, 3, 10, 9, 8, 11, 12, 13, 14, 15, 16, 7, 6, 2}
+    expected := []interface{}{1, 3, 2, 5, 7, 6, 4, 9, 11, 10, 13, 15, 14, 12, 8}
     assert.Equal(suite.T(), expected, suite.TestTree.Root.PostOrderWalk())
 }
 
@@ -57,18 +57,18 @@ func (suite *BSTTestSuite) TestBSTMinimum() {
 
 func (suite *BSTTestSuite) TestBSTMaximum() {
     node := suite.TestTree.Root.Maximum()
-    assert.Equal(suite.T(), 16, node.(*BinarySearchNode).Val)
+    assert.Equal(suite.T(), 15, node.(*BinarySearchNode).Val)
 }
 
 func (suite *BSTTestSuite) TestSize() {
     size := suite.TestTree.Size()
-    assert.Equal(suite.T(), 16, size)
+    assert.Equal(suite.T(), 15, size)
 }
 
 func (suite *BSTTestSuite) TestHeight() {
     height := suite.TestTree.Root.Height()
     fmt.Printf("%v\n", suite.TestTree.Root.String())
-    assert.Equal(suite.T(), 12, height)
+    assert.Equal(suite.T(), 4, height)
 }
 
 func (suite *BSTTestSuite) TestBFS() {
