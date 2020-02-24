@@ -1,7 +1,6 @@
 package tree
 
 import (
-    "fmt"
     "testing"
 
     "github.com/stretchr/testify/assert"
@@ -67,7 +66,6 @@ func (suite *BSTTestSuite) TestSize() {
 
 func (suite *BSTTestSuite) TestHeight() {
     height := suite.TestTree.Root.Height()
-    fmt.Printf("%v\n", suite.TestTree.Root.String())
     assert.Equal(suite.T(), 4, height)
 }
 
@@ -86,7 +84,8 @@ func (suite *BSTTestSuite) TestJoin() {
 func (suite *BSTTestSuite) TestInvert() {
 }
 
-func (suite *BSTTestSuite) TestIsContinous() {
+func (suite *BSTTestSuite) TestBSTIsContinous() {
+    assert.False(suite.T(), suite.TestTree.Root.(*BinarySearchNode).IsContinous())
 }
 
 func (suite *BSTTestSuite) TestIsFoldable() {

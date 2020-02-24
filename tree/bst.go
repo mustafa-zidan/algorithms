@@ -158,7 +158,10 @@ func (n *BinarySearchNode) Maximum() Node {
 }
 
 func (n *BinarySearchNode) String() string {
-    return fmt.Sprintf("{Val: %d, Left: %v, Right:%v}", n.Val, n.Left, n.Right)
+    if n == nil {
+        return `"nil"`
+    }
+    return fmt.Sprintf(`{"Val": %d, "Left": %v, "Right":%v}`, n.Val, n.Left, n.Right)
 }
 
 func (n *BinarySearchNode) Size() int {
@@ -186,6 +189,24 @@ func (n *BinarySearchNode) DFS(item interface{}) Node {
 // A tree is Continuous tree if in each root to leaf path,
 // absolute difference between keys of two adjacent is 1.
 // We are given a binary tree, we need to check if tree is continuous or not.
+// Input :              3
+//                     / \
+//                    2   4
+//                   / \   \
+//                  1   3   5
+// Output: "Yes"
+// 3->2->1 every two adjacent node's absolute difference is 1
+// 3->2->3 every two adjacent node's absolute difference is 1
+// 3->4->5 every two adjacent node's absolute difference is 1
+// Input :              7
+//                     / \
+//                    5   8
+//                   / \   \
+//                  6   4   10
+// Output: "No"
+// 7->5->6 here absolute difference of 7 and 5 is not 1.
+// 7->5->4 here absolute difference of 7 and 5 is not 1.
+// 7->8->10 here absolute difference of 8 and 10 is not 1.
 func (n *BinarySearchNode) IsContinous() bool {
     return false
 }
