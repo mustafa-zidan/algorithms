@@ -159,7 +159,7 @@ func (n *BinarySearchNode) Maximum() Node {
 
 func (n *BinarySearchNode) String() string {
     if n == nil {
-        return `"nil"`
+        return `null`
     }
     return fmt.Sprintf(`{"Val": %d, "Left": %v, "Right":%v}`, n.Val, n.Left, n.Right)
 }

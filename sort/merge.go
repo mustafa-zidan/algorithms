@@ -28,3 +28,7 @@ func merge(left, right []int) []int {
     }
     return result
 }
+
+func MergeInPlaceSort(arr []int) {
+
+}

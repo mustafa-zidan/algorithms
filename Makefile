@@ -13,7 +13,7 @@ test:           ## Run tests, except integration tests
 	@go test -cover ${RACE} ${PACKAGES}
 
 benchmark:      ## Run benchmark tests
-	@go test --bench=^Benchmark.*$$ ${PACKAGES}
+	@go test --bench=^Benchmark.*$$ -benchmem -benchtime 10000000x ${PACKAGES}
 
 deps:           ## Install Neccessary Deps for bulding the repos
 	@go get -u github.com/mitchellh/gox

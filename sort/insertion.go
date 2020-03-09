@@ -1,11 +1,14 @@
 package sort
 
 func InsertionSort(arr []int) {
-    l := len(arr) - 1
-    for i := l; i >= 0; i-- {
-        for j := 0; j < i; j++ {
-            if arr[j] > arr[i] {
-                arr[i], arr[j] = arr[j], arr[i]
+    for i := 1; i < len(arr); i++ {
+        for j := i; j > 0; j-- {
+            if arr[j-1] > arr[j] {
+                arr[j-1], arr[j] = arr[j], arr[j-1]
+            } else {
+                // if there is no swapping then stop this cycle since rest of
+                // elements are sorted
+                break
             }
         }
     }
