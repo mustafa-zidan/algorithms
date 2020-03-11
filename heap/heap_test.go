@@ -1,7 +1,6 @@
 package heap
 
 import (
-    "fmt"
     "testing"
 
     "github.com/stretchr/testify/assert"
@@ -19,7 +18,6 @@ func TestHeap(t *testing.T) {
 }
 func (suite *HeapTestSuite) TestNewMaxHeap() {
     h := NewMaxHeap(1, 2, 3, 4, 5)
-    fmt.Println(h)
     assert.Equal(suite.T(), 5, h.Size())
     assert.Equal(suite.T(), 5, (*h)[0])
 }
