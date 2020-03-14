@@ -7,8 +7,7 @@ import (
 type Heap []int
 
 func NewMaxHeap(items ...int) *Heap {
-    h := Heap{}
-    h = append(h, items...)
+    h := Heap(items)
     for i := (len(h) / 2); i >= 0; i-- {
         h.MaxHeapify(i)
     }
