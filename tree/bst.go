@@ -194,7 +194,7 @@ func (n *BinarySearchNode) DFS(item interface{}) Node {
 //                    2   4
 //                   / \   \
 //                  1   3   5
-// Output: "Yes"
+// Output: true
 // 3->2->1 every two adjacent node's absolute difference is 1
 // 3->2->3 every two adjacent node's absolute difference is 1
 // 3->4->5 every two adjacent node's absolute difference is 1
@@ -203,7 +203,7 @@ func (n *BinarySearchNode) DFS(item interface{}) Node {
 //                    5   8
 //                   / \   \
 //                  6   4   10
-// Output: "No"
+// Output: false
 // 7->5->6 here absolute difference of 7 and 5 is not 1.
 // 7->5->4 here absolute difference of 7 and 5 is not 1.
 // 7->8->10 here absolute difference of 8 and 10 is not 1.
@@ -213,6 +213,41 @@ func (n *BinarySearchNode) IsContinous() bool {
 
 // A tree can be folded if left and right subtrees of the tree are structure
 // wise mirror image of each other. An empty tree is considered as foldable.
+// Consider the below trees:
+// (a) and (b) can be folded.
+// (c) and (d) cannot be folded.
+//
+// (a)              (b)
+//        10                  10
+//      /    \               /  \
+//     7      15           7    15
+//      \    /            /      \
+//       9  11           9       11
+// (c)              (d)
+//         10                 10
+//        /  \               /  \
+//       7   15             7    15
+//      /    /            / \    /
+//     5   11            9   10  12
 func (n *BinarySearchNode) IsFoldable() bool {
+    return false
+}
+
+//  IsBalanced : binary tree is the binary tree where the depth of the two
+//  subtrees of every node never differ by more than 1.
+func (n *BinarySearchNode) IsBalanced() bool {
+    return false
+}
+
+// IsComplete A complete binary tree is a binary tree whose all levels except
+// the last level are completely filled and all the leaves in the last level
+// are all to the left side.
+func (n *BinarySearchNode) IsComplete() bool {
+    return false
+}
+
+// IsPerfect A Binary tree is Perfect Binary Tree in which all internal
+// nodes have two children and all leaves are at the same level.
+func (n *BinarySearchNode) IsPerfect() bool {
     return false
 }
