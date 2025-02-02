@@ -12,3 +12,10 @@
 *.out
 # Build Directory
 bin/
+# intellj
+.idea
+# SonarQ
+.scannerwork
+
+# mac
+.DS_store
